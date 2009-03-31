@@ -9,28 +9,34 @@ def refine_root(x)
     x = yield(x)
     xm = [x.abs,xold.abs].max
     if xm == 0 || (x-xold).abs/xm < 1e-14
-      printf "%02d iterations:", i
-      break
+      return {:result=>x, :converged=>i}
     end
   end
-  return x
+  return {:result=>x, :converged=>-1}
 end
+
 
 if __FILE__ == $0
   
   (-10..10).each do |b|
     b = b/10.0
     puts
-    puts "=== (#{b})*x*cos(x)=sin(x) ==="
+    puts "*** Equation #{b}*x*cos(x) = sin(x) ***"
     
     (-2..2).each do |n|
       
-      x = refine_root(n*Math::PI) do |x|
+      printf "Period %2d: ", n
+      
+      result = refine_root(n*Math::PI) do |x|
         y = b*x
         Math::PI*n + Math.atan(y)
       end
       
-      puts " %2d: %s" % [n,x]
+      if result[:converged] >= 0
+        puts "x=%s (%d iterations)" % [result[:result], result[:converged]]
+      else
+        puts "did not converge"
+      end
       
     end
     
