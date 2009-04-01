@@ -8,9 +8,7 @@ def refine_root(x)
     xold = x
     x = yield(x)
     xm = [x.abs,xold.abs].max
-    if xm == 0 || (x-xold).abs/xm < 1e-14
-      return {:result=>x, :converged=>i}
-    end
+    return {:result=>x, :converged=>i} if xm == 0 || (x-xold).abs/xm < 1e-14
   end
   return {:result=>x, :converged=>-1}
 end
