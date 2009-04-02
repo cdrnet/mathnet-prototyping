@@ -69,15 +69,15 @@ end
 
 @refined_formula = lambda {|b, c|
   @avoid_subtraction_formula[b, c].collect do |x|
-    refine_root(x) { |x| (x*x-c)/(2*(x+b)) }
+    refine_root(x){ |x| (x*x-c)/(2*(x+b)) }
   end
 }
 
 def analyze_formula(b, c)
   #~ x1, x2 = forumla[b, c]
   roots = yield(b, c)
-  puts "  Roots: %s, %s" % roots
-  puts "  Result: %s, %s" % roots.map {|x| (x + 2 * b) * x + c }
+  puts "  Roots: #{roots.inspect}"
+  puts "  Result: #{roots.map{|x| (x + 2 * b) * x + c }.inspect}"
 end
 
 def analyze_roots(b, c)
@@ -96,9 +96,13 @@ end
 
 if __FILE__ == $0
   puts
-  analyze_roots 10.0**4, 4.0
-  puts
   analyze_roots -5.0, 1.0
   puts
-  analyze_roots 10.0**12, -10.0**14
+  analyze_roots 2.0, 5.0
+  puts
+  analyze_roots 1.0e+4, 4.0
+  puts
+  analyze_roots 1.0e+12, -1.0e+14
+  puts
+  analyze_roots 1.2e+100, -1.5e+130
 end
