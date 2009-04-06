@@ -74,7 +74,6 @@ end
 }
 
 def analyze_formula(b, c)
-  #~ x1, x2 = forumla[b, c]
   roots = yield(b, c)
   puts "  Roots: #{roots.inspect}"
   puts "  Result: #{roots.map{|x| (x + 2 * b) * x + c }.inspect}"
